@@ -5,40 +5,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    // Get all users
     @GetMapping
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    // Get specific user
     @GetMapping("/{id}")
-    public User getUser(@PathVariable Long id) {
+    public Optional<User> getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
-    // Add user
     @PostMapping
     public User addUser(@RequestBody User user) {
         return userService.addUser(user);
     }
 
-    // Modify user
     @PutMapping("/{id}")
-    public User modifyUser(@PathVariable Long id, @RequestBody User user) {
-        user.setId(id);
-        return userService.modifyUser(user);
+    public User updateUser(@PathVariable Long id, @RequestBody User user) {
+        return userService.updateUser(id, user);
     }
 
-    // Delete user
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);

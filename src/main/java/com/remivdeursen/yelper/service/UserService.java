@@ -16,31 +16,20 @@ public class UserService {
     private UserRepository userRepository;
 
     public List<User> getAllUsers() {
-        List<User> users = new ArrayList<>();
-        userRepository.findAll().forEach(users::add);
-        return users;
+        return userRepository.findAll();
     }
 
-    public User getUserById(Long id) {
-        Optional<User> user = userRepository.findById(id);
-        if (user.isPresent()) {
-            return user.get();
-        } else {
-            throw new EntityNotFoundException("User not found with id: " + id);
-        }
+    public Optional<User> getUserById(Long id) {
+        return userRepository.findById(id);
     }
 
     public User addUser(User user) {
         return userRepository.save(user);
     }
 
-    public User modifyUser(User user) {
-        Optional<User> userFromDb = userRepository.findById(user.getId());
-        if (userFromDb.isPresent()) {
-            return userRepository.save(user);
-        } else {
-            throw new EntityNotFoundException("User not found with id: " + user.getId());
-        }
+    public User updateUser(Long id, User user) {
+        user.setId(id);
+        return userRepository.save(user);
     }
 
     public void deleteUser(Long id) {

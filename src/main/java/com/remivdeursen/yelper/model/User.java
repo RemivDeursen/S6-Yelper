@@ -3,9 +3,19 @@ package com.remivdeursen.yelper.model;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,7 +39,13 @@ public class User {
         this.username = username;
         this.password = password;
     }
+    public Set<Role> getRoles() {
+        return roles;
+    }
 
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
     public Long getId() {
         return id;
     }
@@ -76,5 +92,9 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public User orElseThrow(Object o) {
+        return null;
     }
 }

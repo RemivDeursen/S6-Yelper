@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,16 +26,32 @@ public class UserController {
         this.userService = userService;
     }
 
+    @CrossOrigin
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        List<UserResponse> userResponses = new ArrayList<>();
+        for (User user : users) {
+            UserResponse userResponse = new UserResponse(user.getId(), user.getUsername(), user.getEmail(), user.getFirstName(), user.getLastName());
+            userResponses.add(userResponse);
+        }
+        return ResponseEntity.ok(userResponses);
     }
 
     @CrossOrigin
     @GetMapping("/{id}")
-    public Optional<User> getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
+        Optional<User> optionalUser = userService.getUserById(id);
+
+        if (optionalUser.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        User user = optionalUser.get();
+        UserResponse userResponse = new UserResponse(user.getId(), user.getUsername(), user.getEmail(), user.getFirstName(), user.getLastName());
+        return ResponseEntity.ok(userResponse);
     }
+
     @CrossOrigin
     @PostMapping
     public ResponseEntity<UserResponse> addUser(@RequestBody @Valid UserRequest userRequest) {
@@ -47,13 +64,31 @@ public class UserController {
         }
     }
 
+    @CrossOrigin
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User user) {
-        return userService.updateUser(id, user);
+    public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @RequestBody @Valid UserRequest userRequest) {
+        Optional<User> optionalUser = userService.getUserById(id);
+
+        if (optionalUser.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        User userToUpdate = optionalUser.get();
+
+        // Update the user entity with the new data
+        userToUpdate.setUsername(userRequest.getUsername());
+        userToUpdate.setEmail(userRequest.getEmail());
+        userToUpdate.setPassword(userRequest.getPassword());
+        userService.updateUser(userToUpdate);
+
+        UserResponse userResponse = new UserResponse(userToUpdate.getId(), userToUpdate.getUsername(), userToUpdate.getEmail(), userToUpdate.getFirstName(), userToUpdate.getLastName());
+        return ResponseEntity.ok(userResponse);
     }
 
+    @CrossOrigin
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }

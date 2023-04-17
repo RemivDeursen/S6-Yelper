@@ -27,8 +27,7 @@ public class UserService {
         return userRepository.save(new User(user.getFirstName(), user.getLastName(), user.getUsername(), user.getEmail(), user.getPassword()));
     }
 
-    public User updateUser(Long id, User user) {
-        user.setId(id);
+    public User updateUser(User user) {
         return userRepository.save(user);
     }
 

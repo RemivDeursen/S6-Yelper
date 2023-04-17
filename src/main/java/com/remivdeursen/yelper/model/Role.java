@@ -6,39 +6,49 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "roles")
-public class Role implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20)
-    private ERole name;
-
-    public Role() {
-
-    }
-
-    public Role(ERole name) {
-        this.name = name;
-    }
-
-    // getters and setters
-
-    public Long getId() {
+public class Role {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public ERole getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(ERole name) {
+    public void setName(String name) {
         this.name = name;
     }
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false, length = 50, unique = true)
+    private String name;
+
+    public Role() { }
+
+    public Role(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Role(String name) {
+        this.name = name;
+    }
+
+    public Role(Integer id) {
+        this.id = id;
+    }
+
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
+    // getters and setters are not shown for brevity
 }

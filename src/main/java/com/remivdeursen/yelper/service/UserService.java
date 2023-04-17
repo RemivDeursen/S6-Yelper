@@ -1,12 +1,12 @@
 package com.remivdeursen.yelper.service;
 
 import com.remivdeursen.yelper.model.User;
+import com.remivdeursen.yelper.model.UserRequest;
 import com.remivdeursen.yelper.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,8 +23,8 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public User addUser(User user) {
-        return userRepository.save(user);
+    public User addUser(@Valid UserRequest user) {
+        return userRepository.save(new User(user.getFirstName(), user.getLastName(), user.getUsername(), user.getEmail(), user.getPassword()));
     }
 
     public User updateUser(Long id, User user) {

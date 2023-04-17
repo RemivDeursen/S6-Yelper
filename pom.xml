@@ -8,11 +8,11 @@
         <version>3.0.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.github.remivdeursena</groupId>
+    <groupId>com.github.remivdeursen</groupId>
     <artifactId>yelper</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>yelper</name>
-    <description>yelper</description>
+    <description>Twitter lookalike Application</description>
     <properties>
         <java.version>17</java.version>
     </properties>

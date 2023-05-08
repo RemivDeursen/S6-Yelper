@@ -26,7 +26,7 @@ steps:
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=europe-west1'
       - 'CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1'
-    dir: 'yepler-backend-springboot/'
+    dir: 'yelper-backend-springboot/'
 
 images: ['gcr.io/graphic-matrix-308512/yelper-app:latest']
 timeout: '1800s'

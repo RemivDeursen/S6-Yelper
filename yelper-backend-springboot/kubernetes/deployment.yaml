@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yelper-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: yelper-app
+  template:
+    metadata:
+      labels:
+        app: yelper-app
+    spec:
+      containers:
+        - name: autopilot-cluster-1
+          image: gcr.io/graphic-matrix-308512/yelper-app:latest
+          ports:
+            - containerPort: 8080
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: yelper-app
+  namespace: "default"
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: "TCP"
+      port: 80
+      targetPort: 8080
+  selector:
+    app: yelper-app
+---
+apiVersion: "networking.k8s.io/v1"
+kind: "Ingress"
+metadata:
+  name: yelper-app
+  namespace: "default"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /*
+            defaultBackend:
+              service:
+                name: yelper-app
+                port:
+                  number: 80

@@ -2,7 +2,7 @@ steps:
   # Step 1: Maven package
   - name: 'gcr.io/cloud-builders/mvn'
     args: ['clean', 'package']
-    dir: 'yepler-backend-springboot/'
+    dir: 'yelper-backend-springboot/'
 
   # Step 2: Docker Build
   - name: 'gcr.io/cloud-builders/docker'
@@ -10,13 +10,13 @@ steps:
            '-t',
            'gcr.io/graphic-matrix-308512/yelper-app:latest',
            '.']
-    dir: 'yepler-backend-springboot/'
+    dir: 'yelper-backend-springboot/'
 
   # Step 3: Docker Push
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push',
            'gcr.io/graphic-matrix-308512/yelper-app:latest']
-    dir: 'yepler-backend-springboot/'
+    dir: 'yelper-backend-springboot/'
 
   # Step 4: Deploy the Docker image to Kubernetes
 

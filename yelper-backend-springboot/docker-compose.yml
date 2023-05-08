@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  # Setting up the service container
+  yelper-app-service:
+    image: 'yelper-app:latest'
+    build:
+      context: /
+      dockerfile: Dockerfile
+    container_name: yelper-app
+    restart: "no"
+    networks:
+      - spring-net
+    depends_on:
+      - yelper-db
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://yelper-db:3306/yelper-db?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false
+  # Setting up the database container
+  yelper-db:
+    image: mysql:latest
+    container_name: yelper-db
+    environment:
+      - MYSQL_DATABASE=yelper-db
+      - MYSQL_ROOT_USERNAME=root
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3306:3306"
+    networks:
+      - spring-net
+    volumes:
+      - userdata:/var/lib/mysql
+      - userdata:/etc/mysql/conf.d
+# Setting up the network for the containers to communicate with each other
+networks:
+  spring-net:
+    name: spring-net
+    driver: bridge
+# Adding the db volume for the userdata
+volumes:
+  userdata:

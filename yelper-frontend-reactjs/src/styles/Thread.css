@@ -1,0 +1,45 @@
+.thread-container{
+    margin-bottom: 40px;
+}
+.card{
+    width: 35rem;
+    min-height: 10rem;
+    color: white;
+    border: 0px !important;
+    border-top: 4px solid rgb(92, 110, 126) !important;
+    background-color: rgb(30, 39, 50);
+}
+#page-content-wrapper {
+    padding-left: 0px !important;
+}
+#sidebar-wrapper{
+    padding-right: 0px !important;
+}
+.card-body{
+    background-color: rgb(30, 39, 50);
+    border: 0px;
+    height: 100%;
+}
+.card-title{
+    color: white;
+    border-bottom: 2px solid rgb(92, 110, 126) !important;
+}
+.card-text{
+    color: white;
+}
+.card-subtitle{
+    color: white;
+    margin-top: 20% !important;
+    border-top: 2px solid rgb(92, 110, 126) !important;
+}
+.first-message{
+
+}
+.comment{
+    padding-left: 10px;
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    background-image: linear-gradient(to bottom, rgb(92, 110, 126) 0%, rgb(92, 110, 126) 100%), linear-gradient(to bottom, rgba(240, 40, 40, 1) 0%, rgba(240, 40, 40, 1) 100%);
+    background-clip: content-box, padding-box;
+}

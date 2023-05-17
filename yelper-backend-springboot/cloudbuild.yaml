@@ -8,14 +8,14 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build',
            '-t',
-           'gcr.io/testproj101-387009/yelper-app:latest',
+           'gcr.io/graphic-matrix-308512/yelper-app:latest',
            '.']
     dir: 'yelper-backend-springboot/'
 
   # Step 3: Docker Push
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push',
-           'gcr.io/testproj101-387009/yelper-app:latest']
+           'gcr.io/graphic-matrix-308512/yelper-app:latest']
     dir: 'yelper-backend-springboot/'
 
   # Step 4: Deploy the Docker image to Kubernetes
@@ -28,5 +28,5 @@ steps:
       - 'CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1'
     dir: 'yelper-backend-springboot/'
 
-images: ['gcr.io/testproj101-387009/yelper-app:latest']
+images: ['gcr.io/graphic-matrix-308512/yelper-app:latest']
 timeout: '1800s'
